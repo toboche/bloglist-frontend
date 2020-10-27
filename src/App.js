@@ -9,6 +9,9 @@ const App = () => {
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
   const [errorMessage, setErrorMessage] = useState(null)
+  const [blogName, setBlogName] = useState('')
+  const [author, setAuthor] = useState('')
+  const [url, setUrl] = useState('')
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
@@ -78,6 +81,61 @@ const App = () => {
             </div>
   }
 
+  const handleNewBlog = async (event) => {
+    event.preventDefault()
+    try{
+      await blogService.postNew({
+        title: blogName, 
+        author: author,
+        url: url
+      })
+      await new Promise(r => setTimeout(r, 100));
+      const newBlogs = await blogService.getAll()
+      setBlogs( newBlogs )
+      setBlogName('')
+      setAuthor('')
+      setUrl('')
+    } catch (xception){
+      setErrorMessage('some error')
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
+    }
+  }
+
+  const newBlogForm = () => {
+    return <form onSubmit={handleNewBlog}>
+              <div>
+                blog name
+                  <input
+                  type="text"
+                  value={blogName}
+                  name="BlogName"
+                  onChange={({ target }) => setBlogName(target.value)}
+                />
+              </div>
+              <div>
+                blog author
+                  <input
+                  type="text"
+                  value={author}
+                  name="Author"
+                  onChange={({ target }) => setAuthor(target.value)}
+                />
+              </div>
+              <div>
+                blog url
+                  <input
+                  type="text"
+                  value={url}
+                  name="Url"
+                  onChange={({ target }) => setUrl(target.value)}
+                />
+              </div>
+              <button type="submit">save</button>
+    </form>
+  }
+
   return (
     <div>
       {!user && loginForm()}
@@ -89,6 +147,7 @@ const App = () => {
         setUser(null)
         blogService.setUser(null)
         }}>sign out</button>}
+      {user && newBlogForm()}
     </div>
   )
 }
