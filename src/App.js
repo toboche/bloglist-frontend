@@ -95,6 +95,9 @@ const App = () => {
       setBlogName('')
       setAuthor('')
       setUrl('')
+      setErrorMessage('succes adding a new note')
+      await new Promise(r => setTimeout(r, 4000))
+      setErrorMessage(null)
     } catch (xception){
       setErrorMessage('some error')
       setTimeout(() => {
