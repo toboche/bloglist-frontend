@@ -88,6 +88,7 @@ const App = () => {
       const newBlogs = await blogService.getAll()
       setBlogs( newBlogs )
       setErrorMessage('succes adding a new note')
+      blogFormRef.current.toggleVisibility()
       await new Promise(r => setTimeout(r, 4000))
       setErrorMessage(null)
     } catch (xception){
@@ -99,7 +100,7 @@ const App = () => {
   }
 
   const newBlog = () => (
-    <Togglable buttonLabel='new blog'>
+    <Togglable buttonLabel='new blog' ref={blogFormRef}>
       <NewBlogForm createBlog={handleNewBlog} />
     </Togglable>
   )
@@ -114,7 +115,7 @@ const App = () => {
         window.localStorage.removeItem('user')
         setUser(null)
         blogService.setUser(null)
-        }}>sign out</button>}
+        }}>sign outt</button>}
       {user && newBlog()}
     </div>
   )
