@@ -20,4 +20,25 @@ const postNew = async (blog) => {
   return response.data
 }
 
-export default { getAll, setUser, postNew }
+const putExisting = async (blog) =>{
+  const config = {
+    headers: {'Authorization': `Bearer ${user.token}`}
+  }
+  const blogToSend = {
+    user: blog.user.id,
+    likes: blog.likes + 1,
+    author: blog.author,
+    title: blog.title,
+    url: blog.url
+  }
+  const response = await axios
+    .put(`${baseUrl}/${blog.id}`, blogToSend, config)
+  return response.data
+}
+
+export default { 
+  getAll, 
+  setUser, 
+  postNew, 
+  putExisting 
+}

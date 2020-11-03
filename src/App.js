@@ -72,11 +72,24 @@ const App = () => {
           </div>
   }
 
+  const handleLikeClicked = async (blog) =>{
+    const updatedBlog = await blogService.putExisting(blog)
+    const updatedBlogs = blogs.map(b => {
+      return blog.id === updatedBlog.id
+      ? updatedBlog
+      : b
+    }
+    )
+    setBlogs(
+      updatedBlogs
+    )
+  }
+
   const blogsList = () => {
     return <div>
               <h2>blogs</h2>
               {blogs.map(blog =>
-                <Blog key={blog.id} blog={blog} />
+                <Blog key={blog.id} blog={blog} handleLikeClicked={(event) => handleLikeClicked(blog)} />
               )}
             </div>
   }
