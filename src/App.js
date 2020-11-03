@@ -6,12 +6,13 @@ import Togglable from './components/Togglable'
 import NewBlogForm from './components/NewBlogForm'
 
 const App = () => {
-  const [blogs, setBlogs] = useState([])
+  var [blogs, setBlogs] = useState([])
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
   const [errorMessage, setErrorMessage] = useState(null)
   const blogFormRef = useRef()
+  blogs = blogs.sort((a,b) => b.likes - a.likes)
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
@@ -75,7 +76,7 @@ const App = () => {
   const handleLikeClicked = async (blog) =>{
     const updatedBlog = await blogService.putExisting(blog)
     const updatedBlogs = blogs.map(b => {
-      return blog.id === updatedBlog.id
+      return b.id === updatedBlog.id
       ? updatedBlog
       : b
     }
