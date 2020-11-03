@@ -2,7 +2,7 @@ import axios from 'axios'
 const baseUrl = '/api/blogs'
 let user = null
 
-const setUser = (newUser) =>{
+const setUser = (newUser) => {
   user = newUser
 }
 
@@ -13,7 +13,7 @@ const getAll = () => {
 
 const postNew = async (blog) => {
   const config = {
-    headers: {'Authorization': `Bearer ${user.token}`}
+    headers: { 'Authorization': `Bearer ${user.token}` }
   }
   const response = axios
     .post(baseUrl, blog, config)
@@ -22,16 +22,16 @@ const postNew = async (blog) => {
 
 const deleteOne = async (blog) => {
   const config = {
-    headers: {'Authorization': `Bearer ${user.token}`}
+    headers: { 'Authorization': `Bearer ${user.token}` }
   }
   const response = axios
     .delete(`${baseUrl}/${blog.id}`, config)
   return response.data
 }
 
-const putExisting = async (blog) =>{
+const putExisting = async (blog) => {
   const config = {
-    headers: {'Authorization': `Bearer ${user.token}`}
+    headers: { 'Authorization': `Bearer ${user.token}` }
   }
   const blogToSend = {
     user: blog.user.id,
@@ -45,10 +45,10 @@ const putExisting = async (blog) =>{
   return response.data
 }
 
-export default { 
-  getAll, 
-  setUser, 
-  postNew, 
+export default {
+  getAll,
+  setUser,
+  postNew,
   putExisting,
   deleteOne
 }

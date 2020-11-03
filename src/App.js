@@ -17,7 +17,7 @@ const App = () => {
   useEffect(() => {
     blogService.getAll().then(blogs =>
       setBlogs( blogs )
-    )  
+    )
   }, [])
   useEffect(() => {
     const storedUser = window.localStorage.getItem('user')
@@ -31,14 +31,14 @@ const App = () => {
   const handleLogin = async (event) => {
     event.preventDefault()
     try{
-      const user = await loginService.login({username, password})
+      const user = await loginService.login({ username, password })
       setUser(user)
       setPassword('')
       setUsername('')
       blogService.setUser(user)
       window.localStorage.setItem('user', JSON.stringify(user))
     } catch (exception){
-      console.log(exception);
+      console.log(exception)
       setErrorMessage('wrong credentials')
       setTimeout(() => {
         setErrorMessage(null)
@@ -46,7 +46,7 @@ const App = () => {
     }
   }
 
-  const loginForm = () =>{
+  const loginForm = () => {
     return <div>
             <h2>login to application</h2>
             <form onSubmit={handleLogin}>
@@ -73,7 +73,7 @@ const App = () => {
           </div>
   }
 
-  const handleLikeClicked = async (blog) =>{
+  const handleLikeClicked = async (blog) => {
     const updatedBlog = await blogService.putExisting(blog)
     const updatedBlogs = blogs.map(b => {
       return b.id === updatedBlog.id
@@ -87,7 +87,7 @@ const App = () => {
   }
 
   const deleteClicked = async (blog) => {
-    console.log(blog);
+    console.log(blog)
     if(!window.confirm(`do you want to delete ${blog.title}?`)){
       return
     }
@@ -101,11 +101,11 @@ const App = () => {
     return <div>
               <h2>blogs</h2>
               {blogs.map(blog =>
-                <Blog 
-                  key={blog.id} 
-                  blog={blog} 
-                  handleLikeClicked={(event) => handleLikeClicked(blog)} 
-                  deleteClicked={event => deleteClicked(blog)}
+                <Blog
+                  key={blog.id}
+                  blog={blog}
+                  handleLikeClicked={() => handleLikeClicked(blog)}
+                  deleteClicked={() => deleteClicked(blog)}
                 />
               )}
             </div>
@@ -114,7 +114,7 @@ const App = () => {
   const handleNewBlog = async (blog) => {
     try{
       await blogService.postNew(blog)
-      await new Promise(r => setTimeout(r, 1000));
+      await new Promise(r => setTimeout(r, 1000))
       const newBlogs = await blogService.getAll()
       setBlogs( newBlogs )
       setErrorMessage('succes adding a new note')
@@ -141,7 +141,7 @@ const App = () => {
       {errorMessage && <div>{errorMessage}</div>}
       {user && <div>{`${user.username} is logged in`}</div>}
       {user && blogsList()}
-      {user && <button onClick={(event) => {
+      {user && <button onClick={() => {
         window.localStorage.removeItem('user')
         setUser(null)
         blogService.setUser(null)
