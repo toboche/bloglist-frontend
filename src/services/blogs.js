@@ -20,6 +20,15 @@ const postNew = async (blog) => {
   return response.data
 }
 
+const deleteOne = async (blog) => {
+  const config = {
+    headers: {'Authorization': `Bearer ${user.token}`}
+  }
+  const response = axios
+    .delete(`${baseUrl}/${blog.id}`, config)
+  return response.data
+}
+
 const putExisting = async (blog) =>{
   const config = {
     headers: {'Authorization': `Bearer ${user.token}`}
@@ -40,5 +49,6 @@ export default {
   getAll, 
   setUser, 
   postNew, 
-  putExisting 
+  putExisting,
+  deleteOne
 }

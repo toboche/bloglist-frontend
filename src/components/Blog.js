@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 
-const Blog = ({ blog, handleLikeClicked}) => {
+const Blog = ({ blog, handleLikeClicked, deleteClicked}) => {
   const [expanded, setExpanded] = useState(false)
   const blogStyle = {
     paddingTop: 10,
@@ -26,7 +26,8 @@ const Blog = ({ blog, handleLikeClicked}) => {
       {blog.likes}
       <button onClick={(event) => handleLikeClicked(blog)}>like</button>
       <br/>
-      {blog.user.name}
+      {blog.user.name} <br/>
+      <button onClick={(event) => deleteClicked(blog)}>delete</button>
     </div>
 
   return (

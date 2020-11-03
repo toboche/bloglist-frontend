@@ -86,11 +86,27 @@ const App = () => {
     )
   }
 
+  const deleteClicked = async (blog) => {
+    console.log(blog);
+    if(!window.confirm(`do you want to delete ${blog.title}?`)){
+      return
+    }
+    await blogService.deleteOne(blog)
+    setBlogs(
+      blogs.filter(it => it.id !== blog.id)
+    )
+  }
+
   const blogsList = () => {
     return <div>
               <h2>blogs</h2>
               {blogs.map(blog =>
-                <Blog key={blog.id} blog={blog} handleLikeClicked={(event) => handleLikeClicked(blog)} />
+                <Blog 
+                  key={blog.id} 
+                  blog={blog} 
+                  handleLikeClicked={(event) => handleLikeClicked(blog)} 
+                  deleteClicked={event => deleteClicked(blog)}
+                />
               )}
             </div>
   }
