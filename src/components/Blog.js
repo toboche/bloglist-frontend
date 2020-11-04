@@ -31,7 +31,7 @@ const Blog = ({ blog, handleLikeClicked, deleteClicked }) => {
     </div>
 
   return (
-    <div style={blogStyle}>
+    <div style={blogStyle} className='blog'>
       {expanded && longForm()}
       {!expanded && shortForm()}
     </div>
