@@ -100,10 +100,11 @@ const App = () => {
   }
 
   const blogsList = () => {
-    return <div>
+    return <div id="blogitems">
               <h2>blogs</h2>
               {blogs.map(blog =>
                 <Blog
+                  id="blog"
                   key={blog.id}
                   blog={blog}
                   handleLikeClicked={() => handleLikeClicked(blog)}
